@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# gmail_metrics specific
+.idea/
+*pyc
+client_secret.json
+gmail_metrics_auth.json
+env.sh
