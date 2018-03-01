@@ -5,6 +5,7 @@ from apiclient import discovery
 import datetime
 import pandas as pd
 import gmail_api_quickstart
+from datadog import statsd
 
 
 def get_service():
@@ -54,11 +55,22 @@ def get_local_df(file_path='scratch/local_copy.csv'):
     return df
 
 
+def dataframe_to_datadog(df):
+    for column in df.items():
+        name, value = column[0], column[1][0]
+        if name != 'index' and type(value) != str:
+            print(name, value)
+            print('gmail_{}'.format(name))
+            statsd.gauge('gmail_{}'.format(name), value)
+
+
 def collect_and_save():
     conn_url = os.environ['METRICS_SQL_AUTH']  # I want this to fail (and fail early) if it is not present
     df = get_inbox_email_metrics()
     df.to_sql('metrics', conn_url, if_exists='append')
+    dataframe_to_datadog(df)
 
 
 if __name__ == '__main__':
     collect_and_save()
+
