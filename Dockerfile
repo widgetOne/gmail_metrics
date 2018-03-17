@@ -3,7 +3,7 @@ FROM amancevice/pandas:0.21.0-python3
 # We want proper container logging
 ENV PYTHONUNBUFFERED 1
 
-EXPOSE 8125
+EXPOSE 8125/udp
 EXPOSE 5432
 EXPOSE 80
 
@@ -19,3 +19,4 @@ COPY gmail_api_quickstart.py /gmail_metrics/
 COPY gmail_metrics_collector.py /gmail_metrics/
 
 CMD ["python", "/gmail_metrics/gmail_metrics_collector.py"]
+
