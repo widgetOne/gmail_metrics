@@ -41,10 +41,10 @@ def get_inbox_email_metrics():
     deltas = list(map(lambda x: (datetime.datetime.now() - x).total_seconds() / 86400.0, timestamps))
     if not deltas:
         deltas = [0]
-    ave_squares = sum(map(lambda x: x**2, deltas)) / len(deltas)
+    sum_squares = sum(map(lambda x: x**2, deltas))
     average = sum(deltas) / len(deltas)
     metrics = {'count': len(inbox_emails), 'oldest': max(deltas), 'average': average,
-               'ave_squares': ave_squares, 'statdate': datetime.datetime.now()}
+               'sum_squares': sum_squares, 'statdate': datetime.datetime.now()}
     df = pd.DataFrame([metrics])
     df.index.name = 'index'
     return df
