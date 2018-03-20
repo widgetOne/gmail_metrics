@@ -106,3 +106,5 @@ ENV/
 client_secret.json
 gmail_metrics_auth.json
 env.sh
+scratch
+
